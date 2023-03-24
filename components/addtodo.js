@@ -23,7 +23,7 @@ export default function AddTodo({ submitHandler }) {
       <Button
         onPress={() => submitHandler(text)}
         title="add"
-        color="coral"
+        color="black"
       ></Button>
     </View>
   );

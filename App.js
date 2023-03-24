@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+// importing of the pages
+
 import Header from "./components/header";
 import TodoItem from "./components/todoitem";
 import AddTodo from "./components/addtodo";
+import Sandbox from "./components/sandbox";
 
 export default function App() {
   const [todos, setTodos] = useState([
@@ -18,32 +29,51 @@ export default function App() {
   };
 
   const submitHandler = (text) => {
-    setTodos((prevTodos) => {
-      return [
-        ...prevTodos,
-        { text: text, key: Math.random().toString() },
+    if (text.length > 3) {
+      setTodos((prevTodos) => {
+        return [
+          ...prevTodos,
+          { text: text, key: Math.random().toString() },
 
-        // ...prevTodos is the spread operator
-      ];
-    });
+          // ...prevTodos is the spread operator
+        ];
+      });
+    } else {
+      Alert.alert(
+        "Kindly Add a valid work",
+        "characters should be more than 3",
+        [{ text: "Ok da ", onPress: () => console.log("alert closed") }]
+      );
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content}>
-        {/* add todo form */}
-        <AddTodo submitHandler={submitHandler} />
-        <View style={styles.list}>
-          <FlatList
-            data={todos}
-            renderItem={({ item }) => (
-              <TodoItem item={item} pressHandler={pressHandler} />
-            )}
-          />
-        </View>
-      </View>
-    </View>
+    <Sandbox />
+
+    // how to dissmiss the keyboard when we touch somewhere else
+    // to do that we have to  use the TouchableWithoutFeedback
+    // <TouchableWithoutFeedback
+    //   onPress={() => {
+    //     Keyboard.dismiss();
+    //     console.log("keyboard dismissed");
+    //   }}
+    // >
+    //   <View style={styles.container}>
+    //     <Header />
+    //     <View style={styles.content}>
+    //       {/* add todo form */}
+    //       <AddTodo submitHandler={submitHandler} />
+    //       <View style={styles.list}>
+    //         <FlatList
+    //           data={todos}
+    //           renderItem={({ item }) => (
+    //             <TodoItem item={item} pressHandler={pressHandler} />
+    //           )}
+    //         />
+    //       </View>
+    //     </View>
+    //   </View>
+    // </TouchableWithoutFeedback>
   );
 }
 
