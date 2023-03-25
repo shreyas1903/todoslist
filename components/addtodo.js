@@ -18,7 +18,7 @@ export default function AddTodo({ submitHandler }) {
         onChangeText={(val) => changeHandler(val)}
       />
       {/* the above can also be written as 
-      (val) => changeHandler(val) */}
+      onChangeText= {(val) => changeHandler(val) }*/}
 
       <Button
         onPress={() => submitHandler(text)}
